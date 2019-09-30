@@ -1,6 +1,6 @@
 <?php
-$f_name = $l_name = $dob = $company = $address1 = $address2 = $city = "";
-$f_name_err = $l_name_err = $dob_err = $address1_err = $city_err = "";
+$f_name = $l_name = $dob = $company = $address1 = $address2 = $city = $zipcode = $phone = $fax = $email = $oamount = $cc = $month = $name = $adt = $address = $city1 = $zip = $name1 = $ques = "";
+$f_name_err = $l_name_err = $dob_err = $address1_err = $city_err = $zipcode_err = $email_err = $amount_err = "";
 if($_SERVER['REQUEST_METHOD']=="POST"){
 	if(empty($_POST['f_name'])){
 		$f_name_err = "First Name cannot be empty!";
@@ -28,28 +28,104 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
   else{
     $company = $_POST['company'];
   }
-
   if(empty($_POST['address1'])){
     $address1_err = "Address cannot be empty!";
   }
   else{
     $address1 = $_POST['address1'];
   }
-
   if(empty($_POST['address2'])){
   }
   else{
     $address2 = $_POST['address2'];
   }
-
   if(empty($_POST['city'])){
     $city_err = "City cannot be empty!";
   }
   else{
     $city = $_POST['city'];
   }
+  if(empty($_POST['zipcode'])){
+    $zipcode_err = "zipcode cannot be empty!";
+  }
+  else{
+    $zipcode = $_POST['zipcode'];
+  }
+  if(empty($_POST['phone'])){
+  }
+  else{
+    $phone = $_POST['phone'];
+  }
+  if(empty($_POST['fax'])){
+  }
+  else{
+    $fax = $_POST['fax'];
+  }
+  if(empty($_POST['email'])){
+    $email_err = "email cannot be empty!";
+  }
+  else{
+    $email = $_POST['email'];
+  }
+  if(empty($_POST['amount'])){
+    $amount_err = "amount cannot be empty!";
+  }
+  if(empty($_POST['oamount'])){
+  }
+  else{
+    $oamount = $_POST['oamount'];
+  }
+  if(empty($_POST['cc'])){
+  }
+  else if((isset($_POST['rdonation'])) && ($_POST['rdonation']=="interested")){
+    $cc = $_POST['cc'];
+  }
+  else{
+  }
+  if(empty($_POST['month'])){
+  }
+  else if((isset($_POST['rdonation'])) && ($_POST['rdonation']=="interested")){
+    $month = $_POST['month'];
+  }
+  else{
+  }
+  if(empty($_POST['name'])){
+  }
+  else{
+    $name = $_POST['name'];
+  }
+  if(empty($_POST['adt'])){
+  }
+  else{
+    $adt = $_POST['adt'];
+  }
+  if(empty($_POST['address'])){
+  }
+  else{
+    $address = $_POST['address'];
+  }
+  if(empty($_POST['city1'])){
+  }
+  else{
+    $city1 = $_POST['city1'];
+  }
+  if(empty($_POST['zip'])){
+  }
+  else{
+    $zip = $_POST['zip'];
+  }
+  if(empty($_POST['name1'])){
+  }
+  else{
+    $name1 = $_POST['name1'];
+  }
+  if(empty($_POST['ques'])){
+  }
+  else{
+    $ques = $_POST['ques'];
+  }
+  
 }
-
 ?> 
 <html>
     <head>
@@ -145,7 +221,8 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 <label style="color:red">*</label>
               </td>
               <td>
-                <input type="text" name="zipcode">
+                <input type="text" name="zipcode" value="<?php echo $zipcode; ?>">
+				<lable style="color:red"><?php echo $zipcode_err; ?></label>
               </td>
             </tr>
             <tr>
@@ -155,9 +232,9 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
               </td>
               <td>
                 <select name="country">
-                  <option value="ban">Bangladesh</option>
-                  <option value="in">India</option>
-                  <option value="pak">Pakistan</option>
+                  <option value="ban" <?php if((isset($_POST['country'])) && ($_POST['country']=="ban")) echo "selected" ?>>Bangladesh</option>
+                  <option value="in" <?php if((isset($_POST['country'])) && ($_POST['country']=="in")) echo "selected" ?>>India</option>
+                  <option value="pak" <?php if((isset($_POST['country'])) && ($_POST['country']=="pak")) echo "selected" ?>>Pakistan</option>
                 </select>
               </td>
             </tr>
@@ -166,7 +243,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 <label required>Phone</label>
               </td>
               <td>
-                <input type="text" name="phone">
+                <input type="text" name="phone" value="<?php echo $phone; ?>">
               </td>
             </tr>
             <tr>
@@ -174,7 +251,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 <label>Fax</label>
               </td>
               <td>
-                <input type="text" name="fax">
+                <input type="text" name="fax" value="<?php echo $fax; ?>">
               </td>
             </tr>
             <tr>
@@ -183,7 +260,8 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 <label style="color:red">*</label>
               </td>
               <td>
-                <input type="text" name="email">
+                <input type="text" name="email"  value="<?php echo $email; ?>">
+				<lable style="color:red"><?php echo $email_err; ?></label>
               </td>
             </tr>
             <tr>
@@ -192,12 +270,13 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 <label style="color:red">*</label>
               </td>
               <td>
-                <input type="radio" name="amount">None
-                <input type="radio" name="amount">$50
-                <input type="radio" name="amount">$75
-                <input type="radio" name="amount">$100
-                <input type="radio" name="amount">$250
-                <input type="radio" name="amount">Other
+                <input type="radio" name="amount" value="none" <?php if((isset($_POST['amount'])) && ($_POST['amount']=="none")) echo "checked" ?>>None
+                <input type="radio" name="amount" value="50" <?php if((isset($_POST['amount'])) && ($_POST['amount']=="50")) echo "checked" ?>>$50
+                <input type="radio" name="amount" value="75" <?php if((isset($_POST['amount'])) && ($_POST['amount']=="75")) echo "checked" ?>>$75
+                <input type="radio" name="amount" value="100" <?php if((isset($_POST['amount'])) && ($_POST['amount']=="100")) echo "checked" ?>>$100
+                <input type="radio" name="amount" value="250" <?php if((isset($_POST['amount'])) && ($_POST['amount']=="250")) echo "checked" ?>>$250
+                <input type="radio" name="amount" value="other" <?php if((isset($_POST['amount'])) && ($_POST['amount']=="other")) echo "checked" ?>>Other
+				<lable style="color:red"><?php echo $amount_err; ?></label>
               </td>
             </tr>
             <tr>
@@ -206,7 +285,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
               </td>
               <td>
                 <label>Other Amount $</label>
-                <input type="text" name="oamount">
+                <input type="text" name="oamount" value="<?php echo $oamount; ?>">
               </td>
             </tr>
             <tr>
@@ -214,7 +293,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 <label>Recurrign Donation</label>
               </td>
               <td>
-                <input type="checkbox" name="rdonation">I am interested in giving on a regular basis.
+                <input type="checkbox" name="rdonation" value="interested" <?php if((isset($_POST['rdonation'])) && ($_POST['rdonation']=="interested")) echo "checked" ?>>I am interested in giving on a regular basis.
               </td>
             </tr>
             <tr>
@@ -223,9 +302,9 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
               </td>
               <td>
                 <label>Monthly Credit Card $</label>
-                <input type="text" name="cc">
+                <input type="text" name="cc" value="<?php echo $cc; ?>">
                 <label>for</label>
-                <input type="text" name="month">
+                <input type="text" name="month" value="<?php echo $month; ?>">
               </td>
             </tr>
           </table>
@@ -238,9 +317,9 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 <label>I would to make this<br>donation</label>
               </td>
               <td>
-                <input type="radio" name="amount">To Honor
+                <input type="radio" name="donation" value="toh" <?php if((isset($_POST['donation'])) && ($_POST['donation']=="toh")) echo "checked" ?>>To Honor
                 <br>
-                <input type="radio" name="amount">In Memory of
+                <input type="radio" name="donation" value="inm" <?php if((isset($_POST['donation'])) && ($_POST['donation']=="inm")) echo "checked" ?>>In Memory of
               </td>
             </tr>
             <tr>
@@ -248,7 +327,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 <label>Name</label>
               </td>
               <td>
-                <input type="text" name="name">
+                <input type="text" name="name" value="<?php echo $name; ?>">
               </td>
             </tr>
             <tr>
@@ -256,7 +335,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 <label>Acknowledge donation to</label>
               </td>
               <td>
-                <input type="text" name="adt">
+                <input type="text" name="adt" value="<?php echo $adt; ?>">
               </td>
             </tr>
             <tr>
@@ -264,7 +343,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 <label>Address</label>
               </td>
               <td>
-                <input type="text" name="address">
+                <input type="text" name="address" value="<?php echo $address; ?>">
               </td>
             </tr>
             <tr>
@@ -272,7 +351,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 <label>City</label>
               </td>
               <td>
-                <input type="text" name="city1">
+                <input type="text" name="city1" value="<?php echo $city1; ?>">
               </td>
             </tr>
             <tr>
@@ -281,9 +360,9 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
               </td>
               <td>
                 <select name="state1">
-                  <option value="D">Dhaka</option>
-                  <option value="C">Comilla</option>
-                  <option value="K">khulna</option>
+                  <option value="Da" <?php if((isset($_POST['state1'])) && ($_POST['state1']=="Da")) echo "selected" ?>>Dhaka</option>
+                  <option value="Co" <?php if((isset($_POST['state1'])) && ($_POST['state1']=="Co")) echo "selected" ?>>Comilla</option>
+                  <option value="Kh" <?php if((isset($_POST['state1'])) && ($_POST['state1']=="Kh")) echo "selected" ?>>khulna</option>
                 </select>
               </td>
             </tr>
@@ -292,7 +371,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 <label>Zip</label>
               </td>
               <td>
-                <input type="text" name="zip">
+                <input type="text" name="zip" value="<?php echo $zip; ?>">
               </td>
             </tr>
           </table>
@@ -309,16 +388,16 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 <label>Name</label>
               </td>
               <td>
-                <input type="text" name="name1">
+                <input type="text" name="name1" value="<?php echo $name1; ?>">
               </td>
             </tr>
             <tr colspan="2">
                 <td>
-                    <input type="checkbox" name="gift">I would to like my gift to remain anonymous.
+                    <input type="checkbox" name="gift" value="gift" <?php if((isset($_POST['gift'])) && ($_POST['gift']=="gift")) echo "checked" ?>>I would to like my gift to remain anonymous.
                     <br>
-                    <input type="checkbox" name="employee">My employee offers a matching gift progrem. I will mail the matching gift.
+                    <input type="checkbox" name="employee" value="employee" <?php if((isset($_POST['employee'])) && ($_POST['employee']=="employee")) echo "checked" ?>>My employee offers a matching gift progrem. I will mail the matching gift.
                     <br>
-                    <input type="checkbox" name="cost">Please save the cost of acknowledging this gift.
+                    <input type="checkbox" name="cost" value="cost" <?php if((isset($_POST['cost'])) && ($_POST['cost']=="cost")) echo "checked" ?>>Please save the cost of acknowledging this gift.
                   </td>
             </tr>
             <tr>
@@ -329,7 +408,7 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
                 <br>
               </td>
               <td>
-                <textarea rows="8" cols="70"></textarea>
+                <textarea rows="8" cols="70" name="ques"  value=""><?php echo $ques; ?></textarea>
               </td>
             </tr>
             <tr>
@@ -380,7 +459,17 @@ if($_SERVER['REQUEST_METHOD']=="POST"){
           </table>
         </div>
       </form>
+		<br><br><br><br>
+		<h1>Domain information</h1>
+		<br>
+		<p>
+		<label><?php echo $f_name; ?></label><br>
+		<label><?php echo $l_name; ?></label><br>
+		<label><?php echo $dob; ?></label><br>
+		<label><?php echo $address1; ?></label><br>
+		<label><?php echo $city; ?></label><br>
+		<label><?php echo $zipcode; ?></label><br>
+		<label><?php echo $email; ?></label><br>
+		</p>
     </body>
   </html>
-
-
